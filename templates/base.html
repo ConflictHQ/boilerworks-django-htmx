@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-50">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>{% block title %}Boilerworks{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  <script>
+    document.body.addEventListener('htmx:configRequest', function(event) {
+      var token = document.querySelector('meta[name="csrf-token"]');
+      if (token) { event.detail.headers['X-CSRFToken'] = token.content; }
+    });
+  </script>
+</head>
+<body class="h-full" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <div class="min-h-full">
+    {% if user.is_authenticated %}
+    {% include "includes/nav.html" %}
+    {% endif %}
+
+    <main class="{% if user.is_authenticated %}py-6{% endif %}">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {% if messages %}
+        <div id="messages" class="mb-4 space-y-2">
+          {% for message in messages %}
+          <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+               x-transition class="rounded-md p-4 {% if message.tags == 'success' %}bg-green-50 text-green-800{% elif message.tags == 'error' %}bg-red-50 text-red-800{% else %}bg-blue-50 text-blue-800{% endif %}">
+            <div class="flex justify-between">
+              <p class="text-sm font-medium">{{ message }}</p>
+              <button @click="show = false" class="ml-3 text-sm font-medium underline">&times;</button>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+  </div>
+</body>
+</html>

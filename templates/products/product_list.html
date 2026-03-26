@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Products — Boilerworks{% endblock %}
+
+{% block content %}
+<div class="md:flex md:items-center md:justify-between mb-6">
+  <h1 class="text-2xl font-bold text-gray-900">Products</h1>
+  {% if perms.products.add_product %}
+  <a href="{% url 'products:create' %}"
+     class="mt-4 md:mt-0 inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
+    New Product
+  </a>
+  {% endif %}
+</div>
+
+<div class="mb-4">
+  <input type="search"
+         name="search"
+         value="{{ search }}"
+         placeholder="Search products..."
+         class="w-full max-w-md rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+         hx-get="{% url 'products:list' %}"
+         hx-trigger="input changed delay:300ms, search"
+         hx-target="#product-table"
+         hx-swap="outerHTML"
+         hx-push-url="true" />
+</div>
+
+{% include "products/partials/product_table.html" %}
+{% endblock %}
