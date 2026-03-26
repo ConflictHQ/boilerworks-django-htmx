@@ -110,4 +110,34 @@ class TestHealthCheck:
     def test_health_returns_ok(self, client):
         response = client.get(reverse("health"))
         assert response.status_code == 200
-        assert response.json()["status"] == "ok"
+        data = response.json()
+        assert data["status"] == "ok"
+        assert data["service"] == "boilerworks-django-htmx"
+        assert "version" in data
+        assert "uptime" in data
+        assert "timestamp" in data
+        assert data["checks"]["database"] == "ok"
+        assert data["links"]["status"] == "/status/"
+
+
+@pytest.mark.django_db
+class TestStatusPage:
+    def test_status_page_accessible_unauthenticated(self, client):
+        response = client.get(reverse("status"))
+        assert response.status_code == 200
+        assert b"Boilerworks" in response.content
+        assert b"Server-rendered Django + HTMX." in response.content
+
+    def test_status_page_contains_links(self, client):
+        response = client.get(reverse("status"))
+        content = response.content.decode()
+        assert "/dashboard/" in content
+        assert "/admin/" in content
+        assert "/health/" in content
+        assert "/auth/login/" in content
+
+    def test_status_page_contains_meta(self, client):
+        response = client.get(reverse("status"))
+        content = response.content.decode()
+        assert "boilerworks-django-htmx" in content
+        assert "All systems operational" in content
