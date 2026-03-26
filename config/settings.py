@@ -2,6 +2,8 @@ import logging
 import os
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
+
 logger = logging.getLogger(__name__)
 
 VERSION = "0.1.0"
@@ -26,6 +28,9 @@ def env_int(name: str, default: int = 0) -> int:
 SECRET_KEY = env_str("DJANGO_SECRET_KEY", "change-me-in-production")
 DEBUG = env_bool("DJANGO_DEBUG", False)
 ALLOWED_HOSTS = [h.strip() for h in env_str("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0").split(",")]
+
+if not DEBUG and SECRET_KEY == "change-me-in-production":
+    raise ImproperlyConfigured("DJANGO_SECRET_KEY must be set to a unique, unpredictable value when DEBUG is False.")
 
 # --- Application ---
 
@@ -127,6 +132,11 @@ SESSION_ENGINE = "django.contrib.sessions.backends.db"
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # 30 days
 CSRF_COOKIE_HTTPONLY = True
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
 
 # --- i18n ---
 

@@ -32,11 +32,15 @@ class TestLogin:
 @pytest.mark.django_db
 class TestLogout:
     def test_logout_redirects_to_login(self, admin_client):
-        response = admin_client.get(reverse("auth1:logout"))
+        response = admin_client.post(reverse("auth1:logout"))
         assert response.status_code == 302
         assert reverse("auth1:login") in response.url
 
     def test_logout_clears_session(self, admin_client):
-        admin_client.get(reverse("auth1:logout"))
+        admin_client.post(reverse("auth1:logout"))
         response = admin_client.get(reverse("dashboard"))
         assert response.status_code == 302  # redirected to login
+
+    def test_logout_rejects_get(self, admin_client):
+        response = admin_client.get(reverse("auth1:logout"))
+        assert response.status_code == 405

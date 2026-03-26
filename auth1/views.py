@@ -1,5 +1,6 @@
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 from django_ratelimit.decorators import ratelimit
 
 from .forms import LoginForm
@@ -22,6 +23,7 @@ def login_view(request):
     return render(request, "auth1/login.html", {"form": form})
 
 
+@require_POST
 def logout_view(request):
     logout(request)
     return redirect("auth1:login")
