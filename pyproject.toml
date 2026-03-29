@@ -44,7 +44,7 @@ select = ["E", "F", "I", "W", "UP", "B", "SIM", "N"]
 ignore = ["E501"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["config", "core", "auth1", "organization", "products", "testdata"]
+known-first-party = ["config", "core", "auth1", "organization", "items", "testdata"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -57,7 +57,7 @@ python_functions = ["test_*"]
 addopts = "-v --tb=short --strict-markers"
 
 [tool.coverage.run]
-source = ["core", "auth1", "organization", "products"]
+source = ["core", "auth1", "organization", "items"]
 omit = ["*/migrations/*", "*/tests/*", "*/testdata/*", "manage.py", "startup.py"]
 
 [tool.coverage.report]

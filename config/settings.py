@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     "core",
     "auth1",
     "organization",
-    "products",
+    "items",
     "testdata",
 ]
 

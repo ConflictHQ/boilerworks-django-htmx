@@ -5,17 +5,17 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("products", "0001_initial"),
+        ("items", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="historicalproduct",
+            model_name="historicalitem",
             name="sku",
             field=models.CharField(blank=True, db_index=True, default=None, max_length=50, null=True),
         ),
         migrations.AlterField(
-            model_name="product",
+            model_name="item",
             name="sku",
             field=models.CharField(blank=True, default=None, max_length=50, null=True, unique=True),
         ),

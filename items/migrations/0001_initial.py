@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="HistoricalProduct",
+            name="HistoricalItem",
             fields=[
                 (
                     "id",
@@ -94,15 +94,15 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "verbose_name": "historical product",
-                "verbose_name_plural": "historical products",
+                "verbose_name": "historical item",
+                "verbose_name_plural": "historical items",
                 "ordering": ("-history_date", "-history_id"),
                 "get_latest_by": ("history_date", "history_id"),
             },
             bases=(simple_history.models.HistoricalChanges, models.Model),
         ),
         migrations.CreateModel(
-            name="Product",
+            name="Item",
             fields=[
                 (
                     "id",

@@ -55,11 +55,11 @@ No separate frontend service. Django serves everything — templates, static fil
 |------|------------|
 | `/` | Redirects to dashboard |
 | `/dashboard/` | Main dashboard |
-| `/products/` | Product list with HTMX search |
-| `/products/create/` | Create product form |
-| `/products/<slug>/` | Product detail |
-| `/products/<slug>/edit/` | Edit product form |
-| `/products/<slug>/delete/` | Delete confirmation |
+| `/items/` | Item list with HTMX search |
+| `/items/create/` | Create item form |
+| `/items/<slug>/` | Item detail |
+| `/items/<slug>/edit/` | Edit item form |
+| `/items/<slug>/delete/` | Delete confirmation |
 | `/auth/login/` | Login page |
 | `/auth/logout/` | Logout |
 | `/admin/` | Django admin |

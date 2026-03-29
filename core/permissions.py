@@ -15,11 +15,11 @@ class P(Enum):
     ORGANIZATION_CHANGE = "organization.change_organization"
     ORGANIZATION_DELETE = "organization.delete_organization"
 
-    # Products (example domain)
-    PRODUCT_VIEW = "products.view_product"
-    PRODUCT_ADD = "products.add_product"
-    PRODUCT_CHANGE = "products.change_product"
-    PRODUCT_DELETE = "products.delete_product"
+    # Items (example domain)
+    ITEM_VIEW = "items.view_item"
+    ITEM_ADD = "items.add_item"
+    ITEM_CHANGE = "items.change_item"
+    ITEM_DELETE = "items.delete_item"
 
     def check(self, user, raise_error=True):
         """Check if user has this permission. Superusers always pass."""

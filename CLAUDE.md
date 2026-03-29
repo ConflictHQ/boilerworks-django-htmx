@@ -22,7 +22,7 @@ Read it before writing any code.
 - Run `ruff check .` and `ruff format --check .` before committing.
 - Never expose integer PKs in URLs or templates — use `slug` or `guid`.
 - Auth check at the top of every view — use `@login_required` + `P.PERMISSION.check(request.user)`.
-- Soft-delete only: call `product.soft_delete(user=request.user)`, never `.delete()`.
+- Soft-delete only: call `item.soft_delete(user=request.user)`, never `.delete()`.
 - HTMX partials: check `request.headers.get("HX-Request")` to return partial vs full page.
 - CSRF: HTMX requests include CSRF token via `htmx:configRequest` event in `base.html`.
 - Tests: pytest + real Postgres, assert against DB state. Both allowed and denied permission cases.

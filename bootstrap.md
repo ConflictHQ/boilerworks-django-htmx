@@ -18,7 +18,7 @@ An agent given this document and a business requirement should be able to genera
 | Admin | Django Admin with `BaseCoreAdmin` (import/export, tracking fields) |
 | Infra | Docker Compose: postgres, redis, celery-worker, celery-beat, mailpit |
 | CI | GitHub Actions: lint (Ruff) + tests (Postgres + Redis services) |
-| Seed | `python manage.py seed` creates admin/viewer users, sample products |
+| Seed | `python manage.py seed` creates admin/viewer users, sample items |
 | Frontend | HTMX 2.0 + Alpine.js 3 + Tailwind CSS, server-rendered templates |
 
 ---
@@ -31,7 +31,7 @@ An agent given this document and a business requirement should be able to genera
 | `core` | Base models (Tracking, BaseCoreModel), admin (BaseCoreAdmin), permissions (P enum), middleware |
 | `auth1` | Session-based authentication: login/logout views with rate limiting |
 | `organization` | Organization + OrganizationMember models |
-| `products` | Example CRUD domain demonstrating all patterns |
+| `items` | Example CRUD domain demonstrating all patterns |
 | `testdata` | `seed` management command for development data |
 
 ---
@@ -55,7 +55,7 @@ Provides: `version` (auto-increments), `created_at/by`, `updated_at/by`, `delete
 ```python
 from core.models import BaseCoreModel
 
-class Product(BaseCoreModel):
+class Item(BaseCoreModel):
     price = models.DecimalField(...)
 ```
 Adds: `guid` (UUID), `name`, `slug` (auto-generated, unique), `description`.
@@ -72,24 +72,24 @@ Views return full pages for normal requests, HTMX partials for `HX-Request`:
 
 ```python
 @login_required
-def product_list(request):
-    P.PRODUCT_VIEW.check(request.user)
-    products = Product.objects.all()
+def item_list(request):
+    P.ITEM_VIEW.check(request.user)
+    items = Item.objects.all()
 
     if request.headers.get("HX-Request"):
-        return render(request, "products/partials/product_table.html", {"products": products})
+        return render(request, "items/partials/item_table.html", {"items": items})
 
-    return render(request, "products/product_list.html", {"products": products})
+    return render(request, "items/item_list.html", {"items": items})
 ```
 
 **URL patterns** follow CRUD convention:
 ```python
 urlpatterns = [
-    path("", views.product_list, name="list"),
-    path("create/", views.product_create, name="create"),
-    path("<slug:slug>/", views.product_detail, name="detail"),
-    path("<slug:slug>/edit/", views.product_update, name="update"),
-    path("<slug:slug>/delete/", views.product_delete, name="delete"),
+    path("", views.item_list, name="list"),
+    path("create/", views.item_create, name="create"),
+    path("<slug:slug>/", views.item_detail, name="detail"),
+    path("<slug:slug>/edit/", views.item_update, name="update"),
+    path("<slug:slug>/delete/", views.item_delete, name="delete"),
 ]
 ```
 
@@ -102,14 +102,14 @@ Group-based. Never user-based. Checked in every view.
 ```python
 from core.permissions import P
 
-P.PRODUCT_VIEW.check(request.user)          # raises PermissionDenied if denied
-P.PRODUCT_ADD.check(request.user, raise_error=False)  # returns False instead
+P.ITEM_VIEW.check(request.user)          # raises PermissionDenied if denied
+P.ITEM_ADD.check(request.user, raise_error=False)  # returns False instead
 ```
 
 Template guards:
 ```html
-{% if perms.products.view_product %}
-  <a href="{% url 'products:list' %}">Products</a>
+{% if perms.items.view_item %}
+  <a href="{% url 'items:list' %}">Items</a>
 {% endif %}
 ```
 
@@ -121,8 +121,8 @@ All admin classes inherit `BaseCoreAdmin`:
 ```python
 from core.admin import BaseCoreAdmin
 
-@admin.register(Product)
-class ProductAdmin(BaseCoreAdmin):
+@admin.register(Item)
+class ItemAdmin(BaseCoreAdmin):
     list_display = ("name", "slug", "price", "created_at")
     search_fields = ("name", "slug")
 ```
@@ -154,17 +154,17 @@ pytest + real Postgres. Assert against database state.
 
 ```python
 @pytest.mark.django_db
-class TestProductCreate:
-    def test_create_saves_product(self, admin_client, admin_user):
-        response = admin_client.post(reverse("products:create"), {
+class TestItemCreate:
+    def test_create_saves_item(self, admin_client, admin_user):
+        response = admin_client.post(reverse("items:create"), {
             "name": "Widget", "price": "9.99", ...
         })
         assert response.status_code == 302
-        product = Product.objects.get(name="Widget")
-        assert product.created_by == admin_user
+        item = Item.objects.get(name="Widget")
+        assert item.created_by == admin_user
 
     def test_create_denied_for_viewer(self, viewer_client):
-        response = viewer_client.get(reverse("products:create"))
+        response = viewer_client.get(reverse("items:create"))
         assert response.status_code == 403
 ```
 

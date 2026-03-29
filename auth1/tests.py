@@ -24,9 +24,9 @@ class TestLogin:
         assert response.status_code == 302
 
     def test_login_with_next_param(self, client, admin_user):
-        response = client.post(reverse("auth1:login") + "?next=/products/", {"username": "admin", "password": "testpass123"})
+        response = client.post(reverse("auth1:login") + "?next=/items/", {"username": "admin", "password": "testpass123"})
         assert response.status_code == 302
-        assert response.url == "/products/"
+        assert response.url == "/items/"
 
 
 @pytest.mark.django_db

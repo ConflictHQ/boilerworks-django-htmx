@@ -190,7 +190,7 @@ urlpatterns = [
     path("status/", status_page, name="status"),
     path("dashboard/", include("core.urls")),
     path("auth/", include("auth1.urls")),
-    path("products/", include("products.urls")),
+    path("items/", include("items.urls")),
     path("admin/", admin.site.urls),
     path("health/", health_check, name="health"),
 ]

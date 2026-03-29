@@ -12,10 +12,10 @@
                class="{% if request.path == '/dashboard/' %}bg-indigo-700 text-white{% else %}text-indigo-200 hover:bg-indigo-500 hover:text-white{% endif %} rounded-md px-3 py-2 text-sm font-medium">
               Dashboard
             </a>
-            {% if perms.products.view_product %}
-            <a href="{% url 'products:list' %}"
-               class="{% if '/products/' in request.path %}bg-indigo-700 text-white{% else %}text-indigo-200 hover:bg-indigo-500 hover:text-white{% endif %} rounded-md px-3 py-2 text-sm font-medium">
-              Products
+            {% if perms.items.view_item %}
+            <a href="{% url 'items:list' %}"
+               class="{% if '/items/' in request.path %}bg-indigo-700 text-white{% else %}text-indigo-200 hover:bg-indigo-500 hover:text-white{% endif %} rounded-md px-3 py-2 text-sm font-medium">
+              Items
             </a>
             {% endif %}
             {% if user.is_staff %}
@@ -54,8 +54,8 @@
   <div x-show="mobileOpen" class="md:hidden">
     <div class="space-y-1 px-2 pb-3 pt-2">
       <a href="{% url 'dashboard' %}" class="block rounded-md px-3 py-2 text-base font-medium text-indigo-200 hover:bg-indigo-500 hover:text-white">Dashboard</a>
-      {% if perms.products.view_product %}
-      <a href="{% url 'products:list' %}" class="block rounded-md px-3 py-2 text-base font-medium text-indigo-200 hover:bg-indigo-500 hover:text-white">Products</a>
+      {% if perms.items.view_item %}
+      <a href="{% url 'items:list' %}" class="block rounded-md px-3 py-2 text-base font-medium text-indigo-200 hover:bg-indigo-500 hover:text-white">Items</a>
       {% endif %}
       <form method="post" action="{% url 'auth1:logout' %}">{% csrf_token %}<button type="submit" class="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-indigo-200 hover:bg-indigo-500 hover:text-white">Sign out</button></form>
     </div>

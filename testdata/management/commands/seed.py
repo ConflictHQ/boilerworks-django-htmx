@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, Permission, User
 from django.core.management.base import BaseCommand
 
 from organization.models import Organization, OrganizationMember
-from products.models import Product
+from items.models import Item
 
 logger = logging.getLogger(__name__)
 
@@ -17,8 +17,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options["flush"]:
-            self.stdout.write("Flushing product and organization data...")
-            Product.all_objects.all().delete()
+            self.stdout.write("Flushing item and organization data...")
+            Item.all_objects.all().delete()
             OrganizationMember.all_objects.all().delete()
             Organization.all_objects.all().delete()
 
@@ -26,9 +26,9 @@ class Command(BaseCommand):
         admin_group, _ = Group.objects.get_or_create(name="Administrators")
         viewer_group, _ = Group.objects.get_or_create(name="Viewers")
 
-        product_perms = Permission.objects.filter(content_type__app_label="products")
-        admin_group.permissions.set(product_perms)
-        view_perms = product_perms.filter(codename__startswith="view_")
+        item_perms = Permission.objects.filter(content_type__app_label="items")
+        admin_group.permissions.set(item_perms)
+        view_perms = item_perms.filter(codename__startswith="view_")
         viewer_group.permissions.set(view_perms)
 
         org_perms = Permission.objects.filter(content_type__app_label="organization")
@@ -60,16 +60,16 @@ class Command(BaseCommand):
         OrganizationMember.objects.get_or_create(member=admin_user, organization=org)
         OrganizationMember.objects.get_or_create(member=viewer_user, organization=org)
 
-        # Sample products
-        products_data = [
+        # Sample items
+        items_data = [
             {"name": "Widget Alpha", "price": "29.99", "sku": "WGT-001", "description": "A versatile alpha widget."},
             {"name": "Widget Beta", "price": "49.99", "sku": "WGT-002", "description": "Enhanced beta widget with extra features."},
             {"name": "Gadget Pro", "price": "199.99", "sku": "GDG-001", "description": "Professional-grade gadget."},
             {"name": "Starter Kit", "price": "9.99", "sku": "KIT-001", "description": "Everything you need to get started."},
-            {"name": "Premium Bundle", "price": "399.99", "sku": "BDL-001", "description": "Our best products in one bundle."},
+            {"name": "Premium Bundle", "price": "399.99", "sku": "BDL-001", "description": "Our best items in one bundle."},
         ]
-        for data in products_data:
-            Product.objects.get_or_create(
+        for data in items_data:
+            Item.objects.get_or_create(
                 sku=data["sku"],
                 defaults={**data, "created_by": admin_user},
             )
