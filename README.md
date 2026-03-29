@@ -89,3 +89,7 @@ Key patterns:
 - Group-based permissions checked in every view via `P.PERMISSION.check(user)`
 - HTMX partials for dynamic updates, Alpine.js for client-side state
 - Tests against real Postgres, both allowed and denied permission cases
+
+---
+
+Boilerworks is a [Conflict](https://weareconflict.com) brand. CONFLICT is a registered trademark of Conflict LLC.
