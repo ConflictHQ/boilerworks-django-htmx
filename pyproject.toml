@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Boilerworks Django + HTMX template — server-rendered with progressive enhancement"
 requires-python = ">=3.12"
 dependencies = [
-    "django>=5.1,<6.0",
+    "django>=5.1,<7.0",
     "psycopg2-binary>=2.9",
     "redis>=5.0",
     "celery[redis]>=5.4",
