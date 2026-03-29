@@ -8,10 +8,10 @@
 </div>
 
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-  {% if perms.products.view_product %}
-  <a href="{% url 'products:list' %}" class="group rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm hover:shadow-md hover:border-brand transition-all">
-    <h3 class="text-lg font-semibold text-gray-100 group-hover:text-brand">Products</h3>
-    <p class="mt-2 text-sm text-gray-400">Manage your product catalogue with full CRUD operations.</p>
+  {% if perms.items.view_item %}
+  <a href="{% url 'items:list' %}" class="group rounded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm hover:shadow-md hover:border-brand transition-all">
+    <h3 class="text-lg font-semibold text-gray-100 group-hover:text-brand">Items</h3>
+    <p class="mt-2 text-sm text-gray-400">Manage your item catalogue with full CRUD operations.</p>
   </a>
   {% endif %}
 
