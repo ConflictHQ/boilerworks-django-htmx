@@ -26,7 +26,7 @@ docker compose exec backend python manage.py migrate
 docker compose exec backend python manage.py seed
 
 # Open the app
-open http://localhost:8001
+open http://localhost:8000
 ```
 
 **Default users:**

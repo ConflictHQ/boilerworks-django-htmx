@@ -217,12 +217,12 @@ python -m pytest --cov -v
 
 | Service | URL |
 |---|---|
-| Django | http://localhost:8001 |
-| Django Admin | http://localhost:8001/admin/ |
-| Health | http://localhost:8001/health/ |
+| Django | http://localhost:8000 |
+| Django Admin | http://localhost:8000/admin/ |
+| Health | http://localhost:8000/health/ |
 | Mailpit | http://localhost:8025 |
-| Postgres | localhost:5434 |
-| Redis | localhost:6381 |
+| Postgres | localhost:5432 |
+| Redis | localhost:6379 |
 
 ---
 

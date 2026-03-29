@@ -24,8 +24,11 @@ compose() {
 case "${1:-help}" in
     up|start)
         compose up -d --build
+        echo "Waiting for services..."
+        sleep 5
+        compose exec -T backend python manage.py migrate --noinput 2>&1 | tail -3
         echo ""
-        echo "Services starting. Check status with: ./run.sh status"
+        echo "Services running. Check status with: ./run.sh status"
         ;;
     down|stop)
         compose down
@@ -41,7 +44,8 @@ case "${1:-help}" in
         compose logs -f "${2:-}"
         ;;
     seed)
-        compose exec backend python manage.py seed
+        compose exec -T backend python manage.py migrate --noinput 2>&1 | tail -3
+        compose exec -T backend python manage.py seed
         ;;
     test)
         compose exec backend python -m pytest --cov --cov-report=term-missing -v
