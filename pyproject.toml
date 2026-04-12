@@ -5,7 +5,7 @@ description = "Boilerworks Django + HTMX template — server-rendered with progr
 requires-python = ">=3.12"
 dependencies = [
     "django>=5.1,<6.0",
-    "psycopg2-binary>=2.9",
+    "psycopg2-binary>=2.9.11",
     "redis>=5.0",
     "celery[redis]>=5.4",
     "django-celery-results>=2.5",
