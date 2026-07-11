@@ -70,7 +70,7 @@ No separate frontend service. Django serves everything — templates, static fil
 ```bash
 # Local development (without Docker)
 uv sync --all-extras
-POSTGRES_HOST=localhost POSTGRES_PORT=5434 uv run python manage.py runserver
+POSTGRES_HOST=localhost POSTGRES_PORT=5432 uv run python manage.py runserver
 
 # Run tests
 make test

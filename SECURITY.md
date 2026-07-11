@@ -25,9 +25,9 @@ We will acknowledge your report within 48 hours and aim to release a fix within 
 
 When deploying Boilerworks:
 
-- Change all default credentials (database, MinIO, session secret)
+- Change all default credentials (database, MinIO)
+- Set `DJANGO_SECRET_KEY` to a unique, unpredictable value (required when `DJANGO_DEBUG` is false)
+- Set `DJANGO_DEBUG=false`
+- Set `DJANGO_ALLOWED_HOSTS` to your domain(s) only
+- Configure `CORS_ALLOWED_ORIGINS` and `CSRF_TRUSTED_ORIGINS` to your domain only
 - Use HTTPS in production
-- Set `NODE_ENV=production`
-- Configure `CORS_ORIGINS` to your domain only
-- Use strong Auth0 credentials
-- Review the security hardening in `bootstrap.md`

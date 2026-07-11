@@ -17,7 +17,7 @@ An agent given this document and a business requirement should be able to genera
 | Async | Celery worker + beat, Redis broker |
 | Admin | Django Admin with `BaseCoreAdmin` (import/export, tracking fields) |
 | Infra | Docker Compose: postgres, redis, celery-worker, celery-beat, mailpit |
-| CI | GitHub Actions: lint (Ruff) + tests (Postgres + Redis services) |
+| CI | GitHub Actions: lint (Ruff) + tests (Postgres + Redis services) + pip-audit |
 | Seed | `python manage.py seed` creates admin/viewer users, sample items |
 | Frontend | HTMX 2.0 + Alpine.js 3 + Tailwind CSS, server-rendered templates |
 
